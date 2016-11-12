@@ -18,7 +18,8 @@ public class Teleport : MonoBehaviour {
   {
     Debug.Log(collision);
     Vector3 reposition = interiorDoor.GetComponent<Transform>().position;
-    reposition.z += 2;
+    reposition.y += 2;
+    reposition.z = -5;
     if (collision.gameObject == player)
     {
       player.GetComponent<Transform>().position = reposition;
