@@ -8,6 +8,8 @@ public class Teleport : MonoBehaviour {
   GameObject saloonInteriorDoor;
   GameObject hatShopExteriorDoor;
   GameObject hatShopInteriorDoor;
+  GameObject generalStoreExteriorDoor;
+  GameObject generalStoreInteriorDoor;
   float doorOffset = 1.0f;
 	// Use this for initialization
 	void Start () {
@@ -16,7 +18,9 @@ public class Teleport : MonoBehaviour {
     saloonInteriorDoor = GameObject.FindGameObjectWithTag("SaloonDoorInterior");
     hatShopExteriorDoor = GameObject.FindGameObjectWithTag("HatShopDoorExterior");
     hatShopInteriorDoor = GameObject.FindGameObjectWithTag("HatShopDoorInterior");
-	}
+    generalStoreExteriorDoor = GameObject.FindGameObjectWithTag("GeneralStoreDoorExterior");
+    generalStoreInteriorDoor = GameObject.FindGameObjectWithTag("GeneralStoreDoorInterior");
+  }
   
 
   void OnTriggerEnter2D(Collider2D other)
@@ -52,6 +56,22 @@ public class Teleport : MonoBehaviour {
     if (other.gameObject == hatShopInteriorDoor)
     {
       Vector3 reposition = hatShopExteriorDoor.GetComponent<Transform>().position;
+      reposition.y -= doorOffset;
+      reposition.z = -5;
+      player.GetComponent<Transform>().position = reposition;
+    }
+    // General Store Doors
+    if (other.gameObject == generalStoreExteriorDoor)
+    {
+      Vector3 reposition = generalStoreInteriorDoor.GetComponent<Transform>().position;
+      reposition.y += doorOffset;
+      reposition.z = -5;
+      player.GetComponent<Transform>().position = reposition;
+    }
+
+    if (other.gameObject == generalStoreInteriorDoor)
+    {
+      Vector3 reposition = generalStoreExteriorDoor.GetComponent<Transform>().position;
       reposition.y -= doorOffset;
       reposition.z = -5;
       player.GetComponent<Transform>().position = reposition;
