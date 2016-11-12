@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrandTheftEquine.CSharp", "GrandTheftEquine.CSharp.csproj", "{4BF6E71E-DD0E-047D-6B13-C0331B429E3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrandTheftEquine.CSharp.Editor", "GrandTheftEquine.CSharp.Editor.csproj", "{6C33AF45-E0A7-C539-18A4-C643E6294CBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BF6E71E-DD0E-047D-6B13-C0331B429E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF6E71E-DD0E-047D-6B13-C0331B429E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF6E71E-DD0E-047D-6B13-C0331B429E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF6E71E-DD0E-047D-6B13-C0331B429E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C33AF45-E0A7-C539-18A4-C643E6294CBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C33AF45-E0A7-C539-18A4-C643E6294CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C33AF45-E0A7-C539-18A4-C643E6294CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C33AF45-E0A7-C539-18A4-C643E6294CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
