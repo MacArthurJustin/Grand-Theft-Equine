@@ -129,12 +129,17 @@
     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Entity\Characters\Character.cs" />
     <Compile Include="Assets\Scripts\Entity\Characters\PlayableCharacter.cs" />
-    <Compile Include="Assets\Scripts\Entity\Items\Bullet.cs" />
-    <Compile Include="Assets\Scripts\Entity\Items\Equipment.cs" />
-    <Compile Include="Assets\Scripts\Entity\Items\HealingItem.cs" />
-    <Compile Include="Assets\Scripts\Entity\Items\TriggerItem.cs" />
-    <Compile Include="Assets\Scripts\Entity\Items\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Entity\Items\Equipment\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Entity\Items\Equipment\Equipment.cs" />
+    <Compile Include="Assets\Scripts\Entity\Items\Equipment\HealingItem.cs" />
+    <Compile Include="Assets\Scripts\Entity\Items\Equipment\TriggerItem.cs" />
+    <Compile Include="Assets\Scripts\Entity\Items\Equipment\Weapon.cs" />
+    <Compile Include="Assets\Scripts\Entity\Items\Pickups\HealingPickup.cs" />
+    <Compile Include="Assets\Scripts\Entity\Items\Pickups\Pickup.cs" />
+    <Compile Include="Assets\Scripts\Entity\Props\BreakableProp.cs" />
+    <Compile Include="Assets\Scripts\Entity\Props\StageProp.cs" />
     <Compile Include="Assets\Scripts\Inteface\IControllable.cs" />
+    <Compile Include="Assets\Scripts\Inteface\IDamagable.cs" />
     <Compile Include="Assets\Scripts\Inteface\IUsable.cs" />
   </ItemGroup>
   <ItemGroup>

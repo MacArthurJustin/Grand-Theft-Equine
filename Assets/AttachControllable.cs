@@ -10,5 +10,6 @@ public class AttachControllable : MonoBehaviour {
         GetComponent<PlayerController>().SetTarget(Controllable);
 
         Controllable.GetComponent<PlayableCharacter>().SetWeapon(DefaultGun);
-	}
+        Controllable.GetComponent<PlayableCharacter>().SetWeapon(DefaultGun);
+    }
 }

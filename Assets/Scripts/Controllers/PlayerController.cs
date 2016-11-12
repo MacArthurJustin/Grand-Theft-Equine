@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Rewired;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     Player Player;

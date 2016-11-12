@@ -1,5 +1,5 @@
 ﻿public interface IUsable {
-    long Guid { get; }
+    int Guid { get; }
     bool CanUse { get; }
     void Use(PlayableCharacter C);
 }

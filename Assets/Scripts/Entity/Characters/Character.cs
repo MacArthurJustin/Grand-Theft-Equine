@@ -14,14 +14,15 @@ public enum Direction
     SouthEast
 }
 
-public class Character : MonoBehaviour, IControllable
+[Serializable]
+public struct AnimationSet
 {
-    [Serializable]
-    public struct AnimationSet
-    {
-        public Sprite[] Frames;
-    }
+    public Sprite[] Frames;
+}
 
+
+public class Character : MonoBehaviour, IControllable, IDamagable
+{
     [Serializable]
     public struct Configuration
     {
@@ -91,6 +92,14 @@ public class Character : MonoBehaviour, IControllable
         get
         {
             return CharacterConfiguration.CurrentHealth > 0;
+        }
+    }
+
+    public bool StopsBullet
+    {
+        get
+        {
+            return true;
         }
     }
 
