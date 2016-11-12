@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using Rewired;
 using System.Collections;
+using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IController {
     Player Player;
     Controls PlayerControls = new Controls();
     IControllable Target;
@@ -14,9 +15,14 @@ public class PlayerController : MonoBehaviour {
         Player = ReInput.players.GetPlayer(PlayerID);
     }
 
-    public void SetTarget(GameObject Target)
+    public void SetTarget(IControllable Target)
     {
-        this.Target = Target.GetComponent<IControllable>();
+        if(this.Target != null)
+        {
+            this.Target.SetController(null);
+        }
+        this.Target = Target;
+        Target.SetController(this);
     }
 
     private ButtonState HandleButton(bool NewState, ButtonState Button)
@@ -43,7 +49,6 @@ public class PlayerController : MonoBehaviour {
     {
         if (Target != null)
         {
- //           Debug.Log(Player.GetAxis("Horizontal"));
             PlayerControls.Movement = new Vector2(Player.GetAxis("Horizontal"), Player.GetAxis("Vertical"));
 
             PlayerControls.TopLeft = HandleButton(Player.GetButton("Top Left"), PlayerControls.TopLeft);

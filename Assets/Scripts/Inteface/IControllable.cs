@@ -20,5 +20,6 @@ public struct Controls
 }
 
 public interface IControllable {
+    void SetController(IController Controller);
     void HandleInput(Controls Control);	
 }
