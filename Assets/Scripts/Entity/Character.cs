@@ -4,15 +4,16 @@ using System;
 
 public class Character : MonoBehaviour, IControllable
 {
-    RectTransform _transform;
+  public float speed;
+    Transform _transform;
 
     void Start()
     {
-        _transform = GetComponent<RectTransform>();
+        _transform = GetComponent<Transform>();
     }
 
     public void HandleInput(Controls Control)
     {
-        _transform.Translate(Control.Movement);
+        _transform.Translate(Control.Movement * speed * Time.deltaTime);
     }
 }

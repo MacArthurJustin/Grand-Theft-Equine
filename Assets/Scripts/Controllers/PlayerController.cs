@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour {
     {
         if (Target != null)
         {
-            Debug.Log(Player.GetAxis("Horizontal"));
+ //           Debug.Log(Player.GetAxis("Horizontal"));
             PlayerControls.Movement = new Vector2(Player.GetAxis("Horizontal"), Player.GetAxis("Vertical"));
 
             PlayerControls.TopLeft = HandleButton(Player.GetButton("Top Left"), PlayerControls.TopLeft);
