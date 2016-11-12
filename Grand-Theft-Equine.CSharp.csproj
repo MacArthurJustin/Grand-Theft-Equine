@@ -144,6 +144,9 @@
     <Compile Include="Assets\Scripts\Inteface\IDamagable.cs" />
     <Compile Include="Assets\Scripts\Inteface\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Inteface\IUsable.cs" />
+    <Compile Include="Assets\Teleport.cs" />
+    <Compile Include="Assets\followPlayer.cs" />
+    <Compile Include="Assets\testing_player_con.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
