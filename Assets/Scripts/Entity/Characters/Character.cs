@@ -17,6 +17,7 @@ public enum Direction
 [Serializable]
 public struct AnimationSet
 {
+    public int Frame;
     public Sprite[] Frames;
 }
 
@@ -43,16 +44,13 @@ public class Character : MonoBehaviour, IControllable, IDamagable
     /// </summary>
     public AnimationSet[] DirectionalSprites;
 
+    public AnimationSet DeathAnim;
+
     /// <summary>
     /// Configuration values for the Character
     /// </summary>
     public Configuration CharacterConfiguration;
-
-    /// <summary>
-    /// Frame that the animation is currently on
-    /// </summary>
-    private int _frame = 0;
-
+    
     protected IController Owner;
     public IController Controller
     {
@@ -120,9 +118,19 @@ public class Character : MonoBehaviour, IControllable, IDamagable
         }
     }
 
+    protected virtual void OnDeath()
+    {
+
+    }
+
     public void ApplyDamage(float Damage)
     {
         CharacterConfiguration.CurrentHealth -= Damage;
+
+        if(!isAlive)
+        {
+            OnDeath();
+        }
     }
 
     public void ApplyHealing(float Amount)
@@ -143,13 +151,13 @@ public class Character : MonoBehaviour, IControllable, IDamagable
                 if (Octant != _direction)
                 {
                     _direction = Octant;
-                    _frame = 0;
+                    DirectionalSprites[_direction].Frame = 0;
                 }
             }
 
-            _renderer.sprite = DirectionalSprites[_direction].Frames[_frame++];
+            _renderer.sprite = DirectionalSprites[_direction].Frames[DirectionalSprites[_direction].Frame++];
 
-            _frame = _frame % 8;
+            DirectionalSprites[_direction].Frame = DirectionalSprites[_direction].Frame % DirectionalSprites[_direction].Frames.Length;
         }
     }
 
@@ -157,5 +165,24 @@ public class Character : MonoBehaviour, IControllable, IDamagable
     {
         _transform.Translate(Control.Movement * Time.deltaTime * CharacterConfiguration.MovementSpeed);
         SetSprite(Control.Movement, Control.BottomLeft == ButtonState.Pressed || Control.BottomLeft == ButtonState.Held);
+    }
+
+    void FixedUpdate()
+    {
+        if(!isAlive)
+        {
+            if(DeathAnim.Frames.Length > 0)
+            {
+                _renderer.sprite = DeathAnim.Frames[DeathAnim.Frame++];
+
+                if(DeathAnim.Frame > DeathAnim.Frames.Length)
+                {
+                    Destroy(gameObject);
+                }
+                return;
+            }
+
+            Destroy(gameObject);
+        }
     }
 }

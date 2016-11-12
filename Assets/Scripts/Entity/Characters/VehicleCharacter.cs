@@ -5,30 +5,38 @@ using System;
 public class VehicleCharacter : PlayableCharacter, IInteractable
 {
     private PlayableCharacter Rider;
+    public Transform Saddle;
+    public Transform Ground;
 
     public void SetRider(PlayableCharacter PC)
     {
-        if(Rider != null)
+        Rigidbody2D RBody = GetComponent<Rigidbody2D>();
+        if (Rider != null)
         {
             Rider.transform.parent = null;
-            Rider.transform.position -= Vector3.up;
+            Rider.transform.position = Ground.position;
 
             Collider2D col = Rider.GetComponent<Collider2D>();
             col.enabled = true;
-
             Controller.SetTarget(Rider);
+
+
+            RBody.constraints = RigidbodyConstraints2D.FreezeAll;
         }
 
         Rider = PC;
 
         if (PC != null)
         {
-            PC.transform.position += Vector3.up;
+            PC.transform.position = Saddle.position;
             PC.transform.parent = transform;
             PC.Controller.SetTarget(this);
 
             Collider2D col = PC.GetComponent<Collider2D>();
+
+            RBody.constraints = RigidbodyConstraints2D.FreezeRotation;
             col.enabled = false;
+            return;
         }
     }
 
@@ -81,6 +89,19 @@ public class VehicleCharacter : PlayableCharacter, IInteractable
             {
                 Rider.UseHealingItem();
             }
+        }
+
+        if (Control.BottomRight == ButtonState.Pressed)
+        {
+            ApplyDamage(1000);
+        }
+    }
+
+    protected override void OnDeath()
+    {
+        if(Rider != null)
+        {
+            SetRider(null);
         }
     }
 }
