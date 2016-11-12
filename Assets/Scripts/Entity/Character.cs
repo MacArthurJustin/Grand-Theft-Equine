@@ -130,7 +130,7 @@ public class Character : MonoBehaviour, IControllable
     public void HandleInput(Controls Control)
     {
 
-        _transform.Translate(Control.Movement * speed * Time.deltaTime);
+        _transform.Translate(Control.Movement * Speed * Time.deltaTime);
 
         SetSprite(Control.Movement);
 

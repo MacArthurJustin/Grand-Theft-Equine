@@ -14,14 +14,22 @@ public class Teleport : MonoBehaviour {
 	}
   
 
-  void OnTriggerEnter2D(Collider2D collision)
+  void OnTriggerEnter2D(Collider2D other)
   {
-    Debug.Log(collision);
-    Vector3 reposition = interiorDoor.GetComponent<Transform>().position;
-    reposition.y += 2;
-    reposition.z = -5;
-    if (collision.gameObject == player)
+ 
+    
+    if (other.gameObject == exteriorDoor)
     {
+      Vector3 reposition = interiorDoor.GetComponent<Transform>().position;
+      reposition.y += 2;
+      reposition.z = -5;
+      player.GetComponent<Transform>().position = reposition;
+    }
+    if (other.gameObject == interiorDoor)
+    {
+      Vector3 reposition = exteriorDoor.GetComponent<Transform>().position;
+      reposition.y -= 2;
+      reposition.z = -5;
       player.GetComponent<Transform>().position = reposition;
     }
   }
