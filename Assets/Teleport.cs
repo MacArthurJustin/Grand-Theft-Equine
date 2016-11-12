@@ -10,7 +10,7 @@ public class Teleport : MonoBehaviour {
   GameObject hatShopInteriorDoor;
   GameObject generalStoreExteriorDoor;
   GameObject generalStoreInteriorDoor;
-  float doorOffset = 1.0f;
+  float doorOffset = 1.1f;
 	// Use this for initialization
 	void Start () {
     player = GameObject.FindGameObjectWithTag("Player");
