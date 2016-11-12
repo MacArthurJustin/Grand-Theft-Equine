@@ -56,8 +56,8 @@ public class PlayerController : MonoBehaviour, IController {
             PlayerControls.TopRight = HandleButton(Player.GetButton("Top Right"), PlayerControls.TopRight);
 
             PlayerControls.BottomLeft = HandleButton(Player.GetButton("Bottom Left"), PlayerControls.BottomLeft);
-            PlayerControls.BottomMiddle = HandleButton(Player.GetButton("Bottom Left"), PlayerControls.BottomMiddle);
-            PlayerControls.BottomRight = HandleButton(Player.GetButton("Bottom Left"), PlayerControls.BottomRight);
+            PlayerControls.BottomMiddle = HandleButton(Player.GetButton("Bottom Middle"), PlayerControls.BottomMiddle);
+            PlayerControls.BottomRight = HandleButton(Player.GetButton("Bottom Right"), PlayerControls.BottomRight);
 
             Target.HandleInput(PlayerControls);
         }
