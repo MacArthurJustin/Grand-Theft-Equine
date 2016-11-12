@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayableCharacter : Character {
     private List<IUsable> _items = new List<IUsable>();
-    private Weapon Weapon;
+    private Weapon _weapon;
     
     public Text HealthText;
 
@@ -20,11 +20,19 @@ public class PlayableCharacter : Character {
         }
     }
 
-    public void AddItem(IUsable Item)
+    public Weapon Weapon
+    {
+        get
+        {
+            return _weapon;
+        }
+    }
+
+    public virtual void AddItem(IUsable Item)
     {
         _items.Add(Item);
 
-        HealthText.text = _items.Where(item => item is HealingItem).Count().ToString();
+        if (HealthText != null) HealthText.text = _items.Where(item => item is HealingItem).Count().ToString();
     }
 
     public void RemoveItem(IUsable Item)
@@ -33,12 +41,33 @@ public class PlayableCharacter : Character {
 
         _items.Remove(Item);
 
-        HealthText.text = _items.Where(item => item is HealingItem).Count().ToString();
+        if(HealthText != null) HealthText.text = _items.Where(item => item is HealingItem).Count().ToString();
     }
 
     public void SetWeapon(Weapon newWeapon)
     {
-        this.Weapon = newWeapon;
+        this._weapon = newWeapon;
+    }
+
+    public void FireWeapon(Collider2D[] Colliders)
+    {
+        if (_weapon != null)
+        {
+            _weapon.Use(this, Colliders);
+        }
+    }
+
+    public void UseHealingItem()
+    {
+        if (_items.Count > 0)
+        {
+            IUsable Item = _items.Where(item => item is HealingItem).First();
+
+            if (Item != null)
+            {
+                Item.Use(this);
+            }
+        }
     }
 
     public override void HandleInput(Controls Control)
@@ -47,19 +76,34 @@ public class PlayableCharacter : Character {
 
         if (Control.TopLeft == ButtonState.Pressed)
         {
-            Weapon.Use(this);
+            FireWeapon(new Collider2D[] { _collider });
         }
-        if (Control.TopRight == ButtonState.Pressed)
-        {
-            if (_items.Count > 0)
-            {
-                IUsable Item = _items.Where(item => item is HealingItem).First();
 
-                if (Item != null)
+        if(Control.TopMiddle == ButtonState.Pressed)
+        {
+            if (CharacterConfiguration.CanInteract)
+            {
+                RaycastHit2D[] RCH = Physics2D.RaycastAll(transform.position, Forward, 1);
+
+                foreach (RaycastHit2D Hit in RCH)
                 {
-                    Item.Use(this);
+                    if (Hit.collider != null && Hit.collider != _collider)
+                    {
+                        IInteractable Interact = Hit.collider.GetComponent<IInteractable>();
+
+                        if (Interact != null)
+                        {
+                            Interact.Interact(this);
+                            break;
+                        }
+                    }
                 }
             }
+        }
+
+        if (Control.TopRight == ButtonState.Pressed)
+        {
+            UseHealingItem();
         }
     }
 }

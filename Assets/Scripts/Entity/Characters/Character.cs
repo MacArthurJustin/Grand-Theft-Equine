@@ -31,10 +31,12 @@ public class Character : MonoBehaviour, IControllable, IDamagable
         public float CurrentHealth;
         public float Alignment;
         public float Reputation;
+        public bool CanInteract;
     }
 
-    Transform _transform;
-    SpriteRenderer _renderer;
+    protected Transform _transform;
+    protected SpriteRenderer _renderer;
+    protected Collider2D _collider;
 
     /// <summary>
     /// List of Sprites used in Walking animations
@@ -50,6 +52,20 @@ public class Character : MonoBehaviour, IControllable, IDamagable
     /// Frame that the animation is currently on
     /// </summary>
     private int _frame = 0;
+
+    protected IController Owner;
+    public IController Controller
+    {
+        get
+        {
+            return Owner;
+        }
+    }
+
+    public void SetController(IController Controller)
+    {
+        Owner = Controller;
+    }
 
     /// <summary>
     /// Direction the Character is facing
@@ -85,6 +101,7 @@ public class Character : MonoBehaviour, IControllable, IDamagable
     {
         _transform = GetComponent<Transform>();
         _renderer = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<Collider2D>();
     }
 
     public bool isAlive

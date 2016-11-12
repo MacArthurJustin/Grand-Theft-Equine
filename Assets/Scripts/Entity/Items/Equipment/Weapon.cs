@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
+using System.Linq;
 
 public class Weapon : MonoBehaviour, IUsable
 {
@@ -67,6 +67,11 @@ public class Weapon : MonoBehaviour, IUsable
 
     public void Use(PlayableCharacter C)
     {
+        Use(C, new Collider2D[] { C.GetComponent<Collider2D>() });
+    }
+
+    public void Use(PlayableCharacter C, Collider2D[] IgnoreColliders)
+    {
         if (_state == State.Reloading) return;
 
         if(CanUse)
@@ -82,20 +87,25 @@ public class Weapon : MonoBehaviour, IUsable
                 RaycastHit2D[] RCH = Physics2D.RaycastAll(C.transform.position, C.Forward, Bill.Distance );
 
                 Debug.Log(RCH.Length);
-
-                Collider2D CharacterCollider = C.GetComponent<Collider2D>();
+                
                 foreach (RaycastHit2D Hit in RCH)
                 {
-                    if (Hit.collider != null && Hit.collider != CharacterCollider)
+                    if (Hit.collider != null)
                     {
+                        if(IgnoreColliders.Contains(Hit.collider))
+                        {
+                            continue;
+                        }
+
                         IDamagable Char = Hit.collider.GetComponent<IDamagable>();
 
                         if(Char != null)
                         {
+                            if (Char.StopsBullet) EndPoint = Hit.point;
+
                             Char.ApplyDamage(WeaponConfiguration.Damage);
                         }
 
-                        if(Char.StopsBullet) EndPoint = Hit.point;
                         break;
                     }
                 }

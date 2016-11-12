@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class AttachControllable : MonoBehaviour {
-    public GameObject Controllable;
+    public PlayableCharacter Controllable;
     public Weapon DefaultGun;
 
 	// Use this for initialization
