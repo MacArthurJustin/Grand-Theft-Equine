@@ -10,6 +10,8 @@ public class Teleport : MonoBehaviour {
   GameObject hatShopInteriorDoor;
   GameObject generalStoreExteriorDoor;
   GameObject generalStoreInteriorDoor;
+  GameObject sheriffExteriorDoor;
+  GameObject sheriffInteriorDoor;
   float doorOffset = 1.1f;
 	// Use this for initialization
 	void Start () {
@@ -20,6 +22,8 @@ public class Teleport : MonoBehaviour {
     hatShopInteriorDoor = GameObject.FindGameObjectWithTag("HatShopDoorInterior");
     generalStoreExteriorDoor = GameObject.FindGameObjectWithTag("GeneralStoreDoorExterior");
     generalStoreInteriorDoor = GameObject.FindGameObjectWithTag("GeneralStoreDoorInterior");
+    sheriffExteriorDoor = GameObject.FindGameObjectWithTag("SheriffDoorExterior");
+    sheriffInteriorDoor = GameObject.FindGameObjectWithTag("SheriffDoorInterior");
   }
   
 
@@ -76,6 +80,24 @@ public class Teleport : MonoBehaviour {
       reposition.z = -5;
       player.GetComponent<Transform>().position = reposition;
     }
+    // Sheriff Doors
+    if (other.gameObject == sheriffExteriorDoor)
+    {
+      Vector3 reposition = sheriffInteriorDoor.GetComponent<Transform>().position;
+      reposition.y += doorOffset;
+      reposition.z = -5;
+      player.GetComponent<Transform>().position = reposition;
+    }
+
+    if (other.gameObject == sheriffInteriorDoor)
+    {
+      Vector3 reposition = sheriffExteriorDoor.GetComponent<Transform>().position;
+      reposition.y -= doorOffset;
+      reposition.z = -5;
+      player.GetComponent<Transform>().position = reposition;
+    }
+
+
   }
 
 
