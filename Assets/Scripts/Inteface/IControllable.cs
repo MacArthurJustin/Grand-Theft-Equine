@@ -2,10 +2,10 @@
 
 public enum ButtonState
 {
+    Up,
     Pressed,
     Held,
-    Released,
-    Up
+    Released
 }
 
 public struct Controls
@@ -20,6 +20,9 @@ public struct Controls
 }
 
 public interface IControllable {
+    Vector2 Forward { get; }
+
     void SetController(IController Controller);
-    void HandleInput(Controls Control);	
+    void HandleInput(Controls Control);
+    void LookInDirection(int Direction, int frame = 0);
 }

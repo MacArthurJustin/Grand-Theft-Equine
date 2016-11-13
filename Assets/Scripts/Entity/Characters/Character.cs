@@ -15,10 +15,40 @@ public enum Direction
 }
 
 [Serializable]
+public struct AnimationCombo
+{
+    public Sprite[] Value;
+}
+
+[Serializable]
 public struct AnimationSet
 {
     public int Frame;
-    public Sprite[] Frames;
+    public int FrameCount;
+    public Sprite[] Legs;
+    public AnimationCombo[] Torso;
+    public AnimationCombo[] Hands;
+    public Sprite[] Bandana;
+    public Sprite[] Face;
+    public Sprite[] Hat;
+
+    public int AddFrame()
+    {
+        ++Frame;
+
+        if(Frame >= FrameCount)
+        {
+            Frame = 0;
+        }
+
+        return Frame;
+    }
+
+    public int ClearFrame()
+    {
+        Debug.Log(string.Format("Clearing"));
+        return 0;
+    }
 }
 
 
@@ -36,6 +66,92 @@ public class Character : MonoBehaviour, IControllable, IDamagable
         public bool Strafes;
     }
 
+    [Serializable]
+    public struct Layers
+    {
+        public SpriteRenderer Legs;
+        public SpriteRenderer Torso;
+        public SpriteRenderer Hands;
+        public SpriteRenderer Bandana;
+        public SpriteRenderer Face;
+        public SpriteRenderer Hat;
+    }
+
+    [Serializable]
+    public struct DirectionSet
+    {
+        public AnimationSet West;
+        public AnimationSet NorthWest;
+        public AnimationSet North;
+        public AnimationSet NorthEast;
+        public AnimationSet East;
+        public AnimationSet SouthEast;
+        public AnimationSet South;
+        public AnimationSet SouthWest;
+
+        public AnimationSet this[int index]
+        {
+            get
+            { 
+                switch(index)
+                {
+                    case 1:
+                        return this.NorthWest;
+                    case 2:
+                        return this.North;
+                    case 3:
+                        return this.NorthEast;
+                    case 4:
+                        return this.East;
+                    case 5:
+                        return this.SouthEast;
+                    case 6:
+                        return this.South;
+                    case 7:
+                        return this.SouthWest;
+
+                    case 0:
+                    default:
+                        return this.West;
+                }
+            }
+            set
+            {
+                switch (index)
+                {
+                    case 1:
+                        this.NorthWest = value;
+                        break;
+                    case 2:
+                        this.North = value;
+                        break;
+                    case 3:
+                        this.NorthEast = value;
+                        break;
+                    case 4:
+                        this.East = value;
+                        break;
+                    case 5:
+                        this.SouthEast = value;
+                        break;
+                    case 6:
+                        this.South = value;
+                        break;
+                    case 7:
+                        this.SouthWest = value;
+                        break;
+
+                    case 0:
+                    default:
+                        this.West = value;
+                        break;
+                }
+            }
+        }
+    }
+
+    public Layers SpriteRenderers;
+
     protected Transform _transform;
     protected SpriteRenderer _renderer;
     protected Collider2D _collider;
@@ -43,15 +159,17 @@ public class Character : MonoBehaviour, IControllable, IDamagable
     /// <summary>
     /// List of Sprites used in Walking animations
     /// </summary>
-    public AnimationSet[] DirectionalSprites;
+    public DirectionSet DirectionalSprites;
 
-    public AnimationSet DeathAnim;
+    public singleAnimation DeathAnim;
 
     /// <summary>
     /// Configuration values for the Character
     /// </summary>
     public Configuration CharacterConfiguration;
-    
+
+    public int Frame = 0;
+
     protected IController Owner;
     public IController Controller
     {
@@ -77,7 +195,7 @@ public class Character : MonoBehaviour, IControllable, IDamagable
     /// 6: South
     /// 7: South East
     /// </summary>
-    private int _direction = 0;
+    public int _direction = 0;
     public Direction Direction
     {
         get
@@ -124,7 +242,7 @@ public class Character : MonoBehaviour, IControllable, IDamagable
 
     }
 
-    public void ApplyDamage(float Damage)
+    public virtual void ApplyDamage(float Damage)
     {
         CharacterConfiguration.CurrentHealth -= Damage;
 
@@ -134,7 +252,7 @@ public class Character : MonoBehaviour, IControllable, IDamagable
         }
     }
 
-    public void ApplyHealing(float Amount)
+    public virtual void ApplyHealing(float Amount)
     {
         CharacterConfiguration.CurrentHealth = Mathf.Min(CharacterConfiguration.MaximumHealth, CharacterConfiguration.CurrentHealth + Amount);
     }
@@ -152,14 +270,23 @@ public class Character : MonoBehaviour, IControllable, IDamagable
                 if (Octant != _direction)
                 {
                     _direction = Octant;
-                    DirectionalSprites[_direction].Frame = 0;
+                    Frame = 0;
                 }
             }
-
-            _renderer.sprite = DirectionalSprites[_direction].Frames[DirectionalSprites[_direction].Frame++];
-
-            DirectionalSprites[_direction].Frame = DirectionalSprites[_direction].Frame % DirectionalSprites[_direction].Frames.Length;
+            
+            Frame = Frame > 15 ? 0 : Frame;
+            LookInDirection(_direction, (Frame++) / 4);
         }
+    }
+
+    public void LookInDirection(int Direction, int frame = 0)
+    {
+        SpriteRenderers.Legs.sprite = DirectionalSprites[Direction].Legs[frame];
+        SpriteRenderers.Torso.sprite = DirectionalSprites[Direction].Torso[0].Value[frame];
+        SpriteRenderers.Hands.sprite = DirectionalSprites[Direction].Hands[1].Value[frame];
+        SpriteRenderers.Bandana.sprite = DirectionalSprites[Direction].Bandana[frame];
+        SpriteRenderers.Face.sprite = DirectionalSprites[Direction].Face[frame];
+        SpriteRenderers.Hat.sprite = DirectionalSprites[Direction].Hat[frame];
     }
 
     public virtual void HandleInput(Controls Control)
@@ -172,11 +299,11 @@ public class Character : MonoBehaviour, IControllable, IDamagable
     {
         if(!isAlive)
         {
-            if(DeathAnim.Frames.Length > 0)
+            if (DeathAnim.Frames.Length > 0)
             {
                 _renderer.sprite = DeathAnim.Frames[DeathAnim.Frame++];
 
-                if(DeathAnim.Frame > DeathAnim.Frames.Length)
+                if (DeathAnim.Frame > DeathAnim.Frames.Length)
                 {
                     Destroy(gameObject);
                 }

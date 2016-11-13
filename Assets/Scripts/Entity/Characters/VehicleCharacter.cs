@@ -20,7 +20,7 @@ public class VehicleCharacter : PlayableCharacter, IInteractable
             col.enabled = true;
             Controller.SetTarget(Rider);
 
-
+            CharacterConfiguration.Alignment = 0;
             RBody.constraints = RigidbodyConstraints2D.FreezeAll;
         }
 
@@ -31,6 +31,8 @@ public class VehicleCharacter : PlayableCharacter, IInteractable
             PC.transform.position = Saddle.position;
             PC.transform.parent = transform;
             PC.Controller.SetTarget(this);
+
+            CharacterConfiguration.Alignment = PC.CharacterConfiguration.Alignment;
 
             Collider2D col = PC.GetComponent<Collider2D>();
 

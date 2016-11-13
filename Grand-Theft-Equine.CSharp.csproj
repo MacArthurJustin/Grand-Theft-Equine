@@ -61,6 +61,9 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>Library\UnityAssemblies\Mono.Cecil.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
@@ -75,9 +78,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AttachControllable.cs" />
-    <Compile Include="Assets\GroundTile.cs" />
-    <Compile Include="Assets\NPCCharactor.cs" />
     <Compile Include="Assets\Rewired\Examples\ControlRemapping1\Scripts\ControlRemappingDemo1.cs" />
     <Compile Include="Assets\Rewired\Examples\CustomControllersTilt\Scripts\CustomControllersTiltDemo.cs" />
     <Compile Include="Assets\Rewired\Examples\CustomControllersTouch\Scripts\CustomControllerDemo.cs" />
@@ -125,8 +125,10 @@
     <Compile Include="Assets\Rewired\Internal\Scripts\InputManager.cs" />
     <Compile Include="Assets\Rewired\Internal\Scripts\Misc\ExternalTools.cs" />
     <Compile Include="Assets\Rewired\Internal\Scripts\Platforms\Ouya\OuyaInputSource.cs" />
+    <Compile Include="Assets\Scripts\Controllers\AIEnemyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Entity\Characters\Character.cs" />
+    <Compile Include="Assets\Scripts\Entity\Characters\NPCCharactor.cs" />
     <Compile Include="Assets\Scripts\Entity\Characters\PlayableCharacter.cs" />
     <Compile Include="Assets\Scripts\Entity\Characters\VehicleCharacter.cs" />
     <Compile Include="Assets\Scripts\Entity\Items\Equipment\Bullet.cs" />
@@ -143,9 +145,11 @@
     <Compile Include="Assets\Scripts\Inteface\IDamagable.cs" />
     <Compile Include="Assets\Scripts\Inteface\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Inteface\IUsable.cs" />
-    <Compile Include="Assets\Teleport.cs" />
-    <Compile Include="Assets\followPlayer.cs" />
-    <Compile Include="Assets\testing_player_con.cs" />
+    <Compile Include="Assets\Scripts\Utility\AttachControllable.cs" />
+    <Compile Include="Assets\Scripts\Utility\GroundTile.cs" />
+    <Compile Include="Assets\Scripts\Utility\Teleport.cs" />
+    <Compile Include="Assets\Scripts\Utility\followPlayer.cs" />
+    <Compile Include="Assets\Scripts\Utility\testing_player_con.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Rewired\Documentation\ReadMe.txt" />
