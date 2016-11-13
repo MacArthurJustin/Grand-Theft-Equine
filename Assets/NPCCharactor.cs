@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class NPCCharactor : Character, IInteractable
 {
+  public string speech_text;
   public Text text;
   public float timer;
  
@@ -12,7 +13,7 @@ public class NPCCharactor : Character, IInteractable
   {
     if (CanInteract)
     {
-      text.text = "And my FIST. full of dollars";
+      text.text = speech_text;
       timer = 3.0f;
       return;
     }

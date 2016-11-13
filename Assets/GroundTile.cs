@@ -13,7 +13,7 @@ public class GroundTile : MonoBehaviour {
     {
       for (int j = 0; j < tilesHigh; j++)
       {
-        Debug.Log(i + j);
+      
         float x = i * unitPerTile - tilesAcross * unitPerTile / 2;
         float y = j * unitPerTile - tilesHigh * unitPerTile / 2;
         Vector3 pos = new Vector3(x, y, 10.0f);
