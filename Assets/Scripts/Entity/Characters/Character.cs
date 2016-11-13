@@ -33,6 +33,7 @@ public class Character : MonoBehaviour, IControllable, IDamagable
         public float Alignment;
         public float Reputation;
         public bool CanInteract;
+        public bool Strafes;
     }
 
     protected Transform _transform;
@@ -164,7 +165,7 @@ public class Character : MonoBehaviour, IControllable, IDamagable
     public virtual void HandleInput(Controls Control)
     {
         _transform.Translate(Control.Movement * Time.deltaTime * CharacterConfiguration.MovementSpeed);
-        SetSprite(Control.Movement, Control.BottomLeft == ButtonState.Pressed || Control.BottomLeft == ButtonState.Held);
+        SetSprite(Control.Movement, CharacterConfiguration.Strafes && (Control.BottomLeft == ButtonState.Pressed || Control.BottomLeft == ButtonState.Held));
     }
 
     void FixedUpdate()
