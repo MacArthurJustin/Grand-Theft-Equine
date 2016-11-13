@@ -103,16 +103,7 @@ public class Weapon : MonoBehaviour, IUsable
     void Start()
     {
         shotArc = -60 / WeaponConfiguration.TimeBetweenFiring;
-        switch(WeaponConfiguration.Type)
-        {
-            case Type.DualRevolvers:
-                ChamberCount = 2;
-                break;
-
-            default:
-                ChamberCount = 1;
-                break;
-        }
+        Initialize(WeaponConfiguration);
     }
 
     void Initialize(Configuration WeaponConfig)
@@ -121,15 +112,21 @@ public class Weapon : MonoBehaviour, IUsable
         switch(WeaponConfiguration.Type)
         {
             case Type.DualRevolvers:
-                Chambers[0].Cylinder.gameObject.SetActive(true);
-                Chambers[1].Cylinder.gameObject.SetActive(true);
+                if (Chambers.Length > 0)
+                {
+                    Chambers[0].Cylinder.gameObject.SetActive(true);
+                    Chambers[1].Cylinder.gameObject.SetActive(true);
+                }
                 ChamberCount = 2;
                 break;
 
             case Type.Revolver:
             default:
-                Chambers[0].Cylinder.gameObject.SetActive(true);
-                Chambers[1].Cylinder.gameObject.SetActive(false);
+                if (Chambers.Length > 0)
+                {
+                    Chambers[0].Cylinder.gameObject.SetActive(true);
+                    Chambers[1].Cylinder.gameObject.SetActive(false);
+                }
                 ChamberCount = 1;
                 break;
         }
@@ -149,36 +146,51 @@ public class Weapon : MonoBehaviour, IUsable
         shot_timer -= Time.deltaTime;
         if(shot_timer > 0)
         {
-            Chambers[(WeaponConfiguration.Ammuniton % ChamberCount)].RotateCylinder(shotArc * Time.deltaTime);
+            if (Chambers.Length > 0)
+            {
+                Chambers[(WeaponConfiguration.Ammuniton % ChamberCount)].RotateCylinder(shotArc * Time.deltaTime);
+            }
         }
     }
 
     public void FireWeapon()
     {
-        Chambers[(WeaponConfiguration.Ammuniton % ChamberCount)].RemoveBullet();
+        if (Chambers.Length > 0)
+        {
+            Chambers[(WeaponConfiguration.Ammuniton % ChamberCount)].RemoveBullet();
+        }
     }
 
     public bool HandleReload()
     {
         reload_timer -= Time.deltaTime;
         arc_timer -= Time.deltaTime;
-        
-        Chambers[CurrentChamber].RotateCylinder((60 * ((ChamberCount * 6) / WeaponConfiguration.TimeToReload)) * Time.deltaTime);
+
+        if (Chambers.Length > 0)
+        {
+            Chambers[CurrentChamber].RotateCylinder((60 * ((ChamberCount * 6) / WeaponConfiguration.TimeToReload)) * Time.deltaTime);
+        }
 
         if (arc_timer <= 0)
         {
             arc_timer = WeaponConfiguration.TimeToReload / (ChamberCount * 6);
 
-            Chambers[CurrentChamber].ReturnBullet();
-            CurrentChamber = (++CurrentChamber) % Chambers.Length;
+            if (Chambers.Length > 0)
+            {
+                Chambers[CurrentChamber].ReturnBullet();
+                CurrentChamber = (++CurrentChamber) % ChamberCount;
+            }
         }
 
         if(reload_timer <= 0)
         {
             foreach(Reloader Chamber in Chambers)
             {
-                Chamber.RotateCylinder();
-                Chamber.ReturnBullet(true);
+                if (Chambers.Length > 0)
+                {
+                    Chamber.RotateCylinder();
+                    Chamber.ReturnBullet(true);
+                }
             }
 
             WeaponConfiguration.Ammuniton = WeaponConfiguration.MagazineSize;

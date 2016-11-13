@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using System;
 
+public struct singleAnimation
+{
+    public int Frame;
+    public Sprite[] Frames;
+}
+
 public class StageProp : MonoBehaviour {
     [Serializable]
     public struct Configuration
     {
-        public AnimationSet Animation;
+        public singleAnimation Animation;
         public bool Animated;
     }
 

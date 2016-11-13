@@ -44,9 +44,9 @@ public class BreakableProp : StageProp, IDamagable
         if (!isAlive)
         {
             if (_renderer == null) _renderer = GetComponent<SpriteRenderer>();
-            _renderer.sprite = Breakable.BreakAnimation.Frames[_frame++];
+            //_renderer.sprite = Breakable.BreakAnimation.Frames[_frame++];
 
-            if(_frame >= Breakable.BreakAnimation.Frames.Length)
+            if(_frame >= Breakable.BreakAnimation.FrameCount)
             {
                 Destroy(gameObject);
             }

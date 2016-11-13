@@ -11,6 +11,7 @@ public class PlayableCharacter : Character {
     private Weapon _weapon;
     
     public Text HealthText;
+    public Image[] HealthImages;
 
     public List<IUsable> Items
     {
@@ -68,6 +69,29 @@ public class PlayableCharacter : Character {
                 Item.Use(this);
             }
         }
+    }
+
+    void SetHealthImage()
+    {
+        if(HealthImages.Length > 0)
+        {
+            int perc = Mathf.FloorToInt((CharacterConfiguration.CurrentHealth / CharacterConfiguration.MaximumHealth) * HealthImages.Length);
+            for (int index = 0; index < HealthImages.Length; index++) {
+                HealthImages[index].enabled = index < perc;
+            }
+        }
+    }
+
+    public override void ApplyDamage(float Damage)
+    {
+        base.ApplyDamage(Damage);
+        SetHealthImage();
+    }
+
+    public override void ApplyHealing(float Amount)
+    {
+        base.ApplyHealing(Amount);
+        SetHealthImage();
     }
 
     public override void HandleInput(Controls Control)
