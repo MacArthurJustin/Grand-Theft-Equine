@@ -16,9 +16,6 @@ public class testing_player_con : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-    
-
-
     float deltaY = Input.GetAxis("1 Move Y");
     float deltaX = Input.GetAxis("1 Move X");
     Vector3 move = new Vector3(deltaX * speed * Time.deltaTime, deltaY * speed *

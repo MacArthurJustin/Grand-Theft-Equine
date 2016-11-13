@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
+  using System.Collections;
 
 public class NPCCharactor : Character, IInteractable
 {
-
-  private float repdiff = 0;
- public bool CanInteract { get { return Mathf.Abs (repdiff) < 10; } }
- public void Interact(PlayableCharacter PC) {
-  //  repdiff = 
+  public Text text;
+  public float timer;
+ 
+ public bool CanInteract { get { return true; } }
+  public void Interact(PlayableCharacter PC)
+  {
+    if (CanInteract)
+    {
+      text.text = "And my FIST. full of dollars";
+      timer = 3.0f;
+      return;
+    }
+    return;
   }
-  
 
   // Use this for initialization
   void Start () {
@@ -18,6 +26,11 @@ public class NPCCharactor : Character, IInteractable
 	
 	// Update is called once per frame
 	void Update () {
-	
+    if (timer > 0) {
+      timer -= Time.deltaTime; }
+   else
+    {
+      text.text = "";
+    }
 	}
 }
