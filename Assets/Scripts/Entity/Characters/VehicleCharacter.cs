@@ -70,7 +70,7 @@ public class VehicleCharacter : PlayableCharacter, IInteractable
 
         if(Rider != null)
         {
-            Rider.SetSprite(Control.Movement, Control.BottomLeft == ButtonState.Pressed || Control.BottomLeft == ButtonState.Held);
+            Rider.SetSprite(Control.Movement, Rider.CharacterConfiguration.Strafes && (Control.BottomLeft == ButtonState.Pressed || Control.BottomLeft == ButtonState.Held));
 
             if (Control.TopLeft == ButtonState.Pressed)
             {
