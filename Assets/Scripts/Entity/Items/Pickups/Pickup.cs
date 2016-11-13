@@ -10,8 +10,6 @@ public class Pickup : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        Debug.Log("Hit");
-
         if (coll.collider == null) return;
 
         PlayableCharacter PC = coll.collider.GetComponent<PlayableCharacter>();

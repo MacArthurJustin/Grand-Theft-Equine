@@ -85,8 +85,6 @@ public class Weapon : MonoBehaviour, IUsable
                 Vector2 EndPoint = (Vector2)C.transform.position + (C.Forward * Bill.Distance);
 
                 RaycastHit2D[] RCH = Physics2D.RaycastAll(C.transform.position, C.Forward, Bill.Distance );
-
-                Debug.Log(RCH.Length);
                 
                 foreach (RaycastHit2D Hit in RCH)
                 {
@@ -101,12 +99,16 @@ public class Weapon : MonoBehaviour, IUsable
 
                         if(Char != null)
                         {
-                            if (Char.StopsBullet) EndPoint = Hit.point;
+                            bool stop = Char.StopsBullet;
 
                             Char.ApplyDamage(WeaponConfiguration.Damage);
-                        }
 
-                        break;
+                            if(stop)
+                            {
+                                EndPoint = Hit.point;
+                                break;
+                            }
+                        }
                     }
                 }
 
